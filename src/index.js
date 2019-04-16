@@ -4,6 +4,7 @@ const errors = require('restify-errors');
 const healthCheck = require('./middleware/health-check');
 const logger = require('./lib/logger');
 const metrics = require('./middleware/metrics');
+const metricsLib = require('./lib/metrics');
 const promiseRejectionHandler = require('./lib/promise-rejection-handler');
 const restify = require('restify');
 const restifyBunyanLogger = require('restify-bunyan-logger');
@@ -45,6 +46,6 @@ module.exports = {
   createServer: createServer,
   errors: errors,
   promiseRejectionHandler: promiseRejectionHandler,
-  metrics: metrics,
+  metrics: metricsLib,
   reqInfo: reqInfo
 };

@@ -7,7 +7,7 @@ describe('index.js', () => {
   it('has a createServer property', () => (typeof index.createServer).should.equal('function'));
   it('has an errors property', () => (typeof index.errors).should.equal('object'));
   it('has a promiseRejectionHandler property', () => (typeof index.promiseRejectionHandler).should.equal('function'));
-  it('has a metrics property', () => (typeof index.metrics).should.equal('function'));
+  it('has a metrics property', () => (typeof index.metrics).should.equal('object'));
   it('has a reqInfo property', () => (typeof index.reqInfo).should.equal('function'));
 
   describe('.createServer()', () => {
