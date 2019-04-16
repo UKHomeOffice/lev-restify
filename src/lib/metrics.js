@@ -6,7 +6,5 @@ const statsdClient = new HotShots();
 
 module.exports = {
   statsdClient: statsdClient,
-  prometheus: {
-    register: promClient.register
-  }
+  promClient: promClient
 };
