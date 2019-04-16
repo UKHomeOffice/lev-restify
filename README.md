@@ -26,7 +26,7 @@ functionality by accessing properties on the object.
 const httpd = restify.createServer('my-server');
 const log = httpd.log;
 
-httpd.listen(config.httpd.port, config.httpd.host, () => {
+httpd.listen(8080, '0.0.0.0', () => {
   log.info('%s listening at %s', httpd.name, httpd.url);
 });
 ```
