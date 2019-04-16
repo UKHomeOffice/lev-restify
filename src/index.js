@@ -22,6 +22,7 @@ const createServer = name => {
   });
 
   httpd.log = log;
+  httpd.promiseRejectionHandler = promiseRejectionHandler(log),
 
   httpd.use(restify.plugins.requestLogger({
     headers: [
@@ -45,7 +46,6 @@ const createServer = name => {
 module.exports = {
   createServer: createServer,
   errors: errors,
-  promiseRejectionHandler: promiseRejectionHandler,
   metrics: metricsLib,
   reqInfo: reqInfo
 };

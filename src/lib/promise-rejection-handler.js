@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (log, next) => err => {
+module.exports = log => next => err => {
     log.error(err);
     next(err);
 };

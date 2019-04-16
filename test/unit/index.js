@@ -6,7 +6,6 @@ describe('index.js', () => {
   it('is an object', () => (typeof index).should.equal('object'));
   it('has a createServer property', () => (typeof index.createServer).should.equal('function'));
   it('has an errors property', () => (typeof index.errors).should.equal('object'));
-  it('has a promiseRejectionHandler property', () => (typeof index.promiseRejectionHandler).should.equal('function'));
   it('has a metrics property', () => (typeof index.metrics).should.equal('object'));
   it('has a reqInfo property', () => (typeof index.reqInfo).should.equal('function'));
 
@@ -29,6 +28,7 @@ describe('index.js', () => {
         describe('the object', () => {
           it('has a listen method', () => (typeof result.listen).should.equal('function'));
           it('has a log property', () => (typeof result.log).should.equal('object'));
+          it('has a promiseRejectionHandler property', () => (typeof result.promiseRejectionHandler).should.equal('function'));
         });
       });
     });
