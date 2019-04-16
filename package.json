@@ -1,0 +1,45 @@
+{
+  "name": "lev-restify",
+  "version": "0.1.0",
+  "description": "Life Event Verification's Restify Server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run test:cover && npm run test:check-coverage",
+    "test:unit": "mocha --reporter spec ./test/unit",
+    "test:cover": "nyc --all npm run test:unit && nyc report --reporter=html",
+    "test:check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UKHomeOffice/lev-restify"
+  },
+  "author": "Daniel A.C. Martin <npm@daniel-martin.co.uk> (http://daniel-martin.co.uk/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UKHomeOffice/lev-restify/issues"
+  },
+  "homepage": "https://github.com/UKHomeOffice/lev-restify#readme",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "hot-shots": "^5.9.0",
+    "prom-client": "^11.2.1",
+    "restify": "^7.2.0",
+    "restify-bunyan-logger": "^2.0.7",
+    "restify-errors": "^6.1.0",
+    "snyk": "^1.82.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "nyc": "^11.8.0",
+    "sinon": "^5.0.10",
+    "sinon-chai": "^3.1.0"
+  },
+  "nyc": {
+    "include": [
+      "src/"
+    ]
+  }
+}
