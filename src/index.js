@@ -11,13 +11,15 @@ const restifyBunyanLogger = require('restify-bunyan-logger');
 const reqInfo = require('./lib/req-info');
 const secureHeaders = require('./middleware/secure-headers');
 
+const originalCreateServer = restify.createServer.bind(restify);
+
 const createServer = options => {
   const name = options.name;
   const log = logger(name);
 
   process.title = name.replace(/[^\w]/gi, '').substr(0, 6);
 
-  const httpd = restify.createServer(Object.assign({
+  const httpd = originalCreateServer(Object.assign({
     log: log
   }, options));
 
@@ -43,9 +45,9 @@ const createServer = options => {
   return httpd;
 };
 
-module.exports = {
+module.exports = Object.assign(restify, {
   createServer: createServer,
   errors: errors,
   metrics: metricsLib,
   reqInfo: reqInfo
-};
+});
