@@ -11,15 +11,15 @@ const restifyBunyanLogger = require('restify-bunyan-logger');
 const reqInfo = require('./lib/req-info');
 const secureHeaders = require('./middleware/secure-headers');
 
-const createServer = name => {
+const createServer = options => {
+  const name = options.name;
   const log = logger(name);
 
   process.title = name.replace(/[^\w]/gi, '').substr(0, 6);
 
-  const httpd = restify.createServer({
-    log: log,
-    name: name
-  });
+  const httpd = restify.createServer(Object.assign({
+    log: log
+  }, options));
 
   httpd.log = log;
   httpd.promiseRejectionHandler = promiseRejectionHandler(log),
