@@ -14,10 +14,14 @@ const secureHeaders = require('./middleware/secure-headers');
 const originalCreateServer = restify.createServer.bind(restify);
 
 const createServer = options => {
+  options = options || {};
+
   const name = options.name;
   const log = logger(name);
 
-  process.title = name.replace(/[^\w]/gi, '').substr(0, 6);
+  if (name) {
+    process.title = name.replace(/[^\w]/gi, '').substr(0, 6);
+  }
 
   const httpd = originalCreateServer(Object.assign({
     log: log
