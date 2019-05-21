@@ -16,14 +16,14 @@ const originalCreateServer = restify.createServer.bind(restify);
 const createServer = options => {
   options = options || {};
 
-  const name = options.name;
+  if (options.name) {
+    process.title = options.name.replace(/[^\w]/gi, '').substr(0, 6);
+  }
+
+  const name = options.name || 'restify';
   const log = logger(name);
   const formatBinary = restify.formatters['application/octet-stream; q=0.2'];
   const formatText = restify.formatters['text/plain; q=0.3'];
-
-  if (name) {
-    process.title = name.replace(/[^\w]/gi, '').substr(0, 6);
-  }
 
   const httpd = originalCreateServer(Object.assign({
     log: log
