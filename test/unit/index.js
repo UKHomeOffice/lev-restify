@@ -15,12 +15,30 @@ describe('index.js', () => {
     it('is a function', () => (typeof subject).should.equal('function'));
     it('is a middleware', () => subject.length.should.equal(1));
 
+    describe('when called with no arguments', () => {
+      let result;
+
+      before(() => {
+        result = subject();
+      });
+
+      it('returns an object', () => (typeof result).should.equal('object'));
+
+      describe('the object', () => {
+        it('has a listen method', () => (typeof result.listen).should.equal('function'));
+        it('has a log property', () => (typeof result.log).should.equal('object'));
+        it('has a promiseRejectionHandler property', () => (typeof result.promiseRejectionHandler).should.equal('function'));
+      });
+    });
+
     describe('when called with one argument', () => {
-      describe('that is a string', () => {
+      describe('that is an object', () => {
         let result;
 
         before(() => {
-          result = subject('foo');
+          result = subject({
+            name: 'foo'
+          });
         });
 
         it('returns an object', () => (typeof result).should.equal('object'));
