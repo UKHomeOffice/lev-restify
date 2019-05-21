@@ -23,7 +23,7 @@ You can then create a [Restify] server using `createServer()` and access bundled
 functionality by accessing properties on the object.
 
 ```js
-const httpd = restify.createServer('my-server');
+const httpd = restify.createServer({ name: 'my-server' });
 const log = httpd.log;
 
 httpd.listen(8080, '0.0.0.0', () => {
