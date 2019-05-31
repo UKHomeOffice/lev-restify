@@ -25,14 +25,14 @@
     "bunyan": "^1.8.12",
     "hot-shots": "^5.9.0",
     "prom-client": "^11.2.1",
-    "restify": "^7.2.0",
+    "restify": "^8.3.2",
     "restify-bunyan-logger": "^2.0.7",
     "restify-errors": "^6.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
-    "nyc": "^11.8.0",
+    "nyc": "^14.1.1",
     "sinon": "^5.0.10",
     "sinon-chai": "^3.1.0",
     "snyk": "^1.82.0"
