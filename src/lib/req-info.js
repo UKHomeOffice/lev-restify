@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (req) => {
-  const aud = req.headers['x-auth-aud'] || req.headers['x-auth-audience'];
+  const aud = req.headers['x-auth-audience'];
   const client = aud && aud.split(',').filter(e => e !== 'lev-api')[0];
 
   return ({
