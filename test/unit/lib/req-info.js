@@ -26,33 +26,95 @@ describe('lib/req-info.js', () => {
       });
 
       describe('with keycloak-gatekeeper headers', () => {
-        let result;
+        describe('with a single client on the old header', () => {
+          let result;
 
-        before(() => {
-          result = reqInfo({
-            headers: {
-              'x-auth-aud': 'client',
-              'x-auth-groups': 'group1,group2,group3',
-              'x-auth-roles': 'role1,role2,role3',
-              'x-auth-username': 'username'
-            }
+          before(() => {
+            result = reqInfo({
+              headers: {
+                'x-auth-aud': 'client',
+                'x-auth-groups': 'group1,group2,group3',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-auth-username': 'username'
+              }
+            });
           });
+
+          it('returns a more friendly object', () => result.should.deep.equal({
+            client: 'client',
+            groups: [
+              'group1',
+              'group2',
+              'group3'
+            ],
+            roles: [
+              'role1',
+              'role2',
+              'role3'
+            ],
+            username: 'username'
+          }));
         });
 
-        it('returns a more friendly object', () => result.should.deep.equal({
-          client: 'client',
-          groups: [
-            'group1',
-            'group2',
-            'group3'
-          ],
-          roles: [
-            'role1',
-            'role2',
-            'role3'
-          ],
-          username: 'username'
-        }));
+        describe('with a single client', () => {
+          let result;
+
+          before(() => {
+            result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client',
+                'x-auth-groups': 'group1,group2,group3',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-auth-username': 'username'
+              }
+            });
+          });
+
+          it('returns a more friendly object', () => result.should.deep.equal({
+            client: 'client',
+            groups: [
+              'group1',
+              'group2',
+              'group3'
+            ],
+            roles: [
+              'role1',
+              'role2',
+              'role3'
+            ],
+            username: 'username'
+          }));
+        });
+
+        describe('with multiple clients', () => {
+          let result;
+
+          before(() => {
+            result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-groups': 'group1,group2,group3',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-auth-username': 'username'
+              }
+            });
+          });
+
+          it('returns a more friendly object', () => result.should.deep.equal({
+            client: 'client',
+            groups: [
+              'group1',
+              'group2',
+              'group3'
+            ],
+            roles: [
+              'role1',
+              'role2',
+              'role3'
+            ],
+            username: 'username'
+          }));
+        });
       });
     });
   });
