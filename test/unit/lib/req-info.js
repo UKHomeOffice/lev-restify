@@ -26,7 +26,7 @@ describe('lib/req-info.js', () => {
       });
 
       describe('with keycloak-gatekeeper headers', () => {
-        describe('with a single client', () => {
+        describe('with a single audience', () => {
           let result;
 
           before(() => {
@@ -56,7 +56,7 @@ describe('lib/req-info.js', () => {
           }));
         });
 
-        describe('with multiple clients', () => {
+        describe('with multiple audiences', () => {
           let result;
 
           before(() => {
