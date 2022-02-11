@@ -23,8 +23,8 @@
   "homepage": "https://github.com/UKHomeOffice/lev-restify#readme",
   "dependencies": {
     "bunyan": "^1.8.15",
-    "hot-shots": "^5.9.0",
-    "prom-client": "^11.2.1",
+    "hot-shots": "^9.0.0",
+    "prom-client": "^14.0.1",
     "restify": "^8.6.1",
     "restify-bunyan-logger": "^2.0.7",
     "restify-errors": "^6.1.0"
