@@ -24,7 +24,7 @@
   "dependencies": {
     "bunyan": "^1.8.12",
     "hot-shots": "^5.9.0",
-    "prom-client": "^11.2.1",
+    "prom-client": "^11.5.3",
     "restify": "^8.3.2",
     "restify-bunyan-logger": "^2.0.7",
     "restify-errors": "^6.1.0"
