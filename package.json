@@ -1,14 +1,14 @@
 {
   "name": "lev-restify",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Life Event Verification's Restify Server",
   "main": "src/index.js",
   "scripts": {
     "test": "npm run test:cover && npm run test:check-coverage",
-    "test:unit": "mocha --reporter spec ./test/unit",
+    "test:unit": "mocha --require test/common.js --recursive --reporter spec ./test/unit",
     "test:cover": "nyc --all npm run test:unit && nyc report --reporter=html",
     "test:check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepublish": "npm run snyk-protect"
   },
   "repository": {
@@ -22,20 +22,20 @@
   },
   "homepage": "https://github.com/UKHomeOffice/lev-restify#readme",
   "dependencies": {
-    "bunyan": "^1.8.12",
-    "hot-shots": "^5.9.0",
-    "prom-client": "^11.2.1",
-    "restify": "^8.3.2",
+    "bunyan": "^2.0.5",
+    "hot-shots": "^10.0.0",
+    "prom-client": "^14.2.0",
+    "restify": "^11.1.0",
     "restify-bunyan-logger": "^2.0.7",
-    "restify-errors": "^6.1.0"
+    "restify-errors": "^8.0.2"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.2.0",
-    "nyc": "^14.1.1",
-    "sinon": "^5.0.10",
-    "sinon-chai": "^3.1.0",
-    "snyk": "^1.82.0"
+    "@snyk/protect": "^1.1187.0",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "sinon": "^15.2.0",
+    "sinon-chai": "^3.7.0"
   },
   "nyc": {
     "include": [
