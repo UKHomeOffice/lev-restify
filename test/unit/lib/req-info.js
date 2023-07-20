@@ -26,13 +26,13 @@ describe('lib/req-info.js', () => {
       });
 
       describe('with keycloak-gatekeeper headers', () => {
-        describe('with a single audience', () => {
+        describe('with a single audience using (short header) x-auth-aud', () => {
           let result;
 
           before(() => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client',
+                'x-auth-aud': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-auth-username': 'username'
