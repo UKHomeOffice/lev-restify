@@ -1,6 +1,6 @@
 {
   "name": "lev-restify",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Life Event Verification's Restify Server",
   "main": "src/index.js",
   "scripts": {
