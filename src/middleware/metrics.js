@@ -3,7 +3,7 @@
 const metrics = require('../lib/metrics');
 const register = metrics.promClient.register;
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res) => {
   res.set('Content-Type', register.contentType);
-  res.end(register.metrics());
+  res.end(await register.metrics());
 };
