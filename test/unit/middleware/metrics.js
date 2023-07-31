@@ -6,7 +6,7 @@ describe('middleware/metrics.js', () => {
   it('is a function', () => (typeof metrics).should.equal('function'));
   it('is a middleware', () => metrics.length.should.equal(2));
 
-  describe('when called with three arguments', () => {
+  describe('when called with two arguments', () => {
     describe('that are req, res and next objects', () => {
       let result;
 
