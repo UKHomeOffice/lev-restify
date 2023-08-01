@@ -7,7 +7,7 @@ describe('middleware/metrics.js', () => {
   it('is a middleware', () => metrics.length.should.equal(2));
 
   describe('when called with two arguments', () => {
-    describe('that are req, res and next objects', () => {
+    describe('that are req, res objects', () => {
       let result;
 
       const req = {};
@@ -20,6 +20,10 @@ describe('middleware/metrics.js', () => {
       });
 
       it('sends a response', () => res.end.should.have.been.called);
+      it('returns a promise', () => {
+        expect(result)
+          .to.be.an.instanceOf(Promise)
+      });
     });
   });
 });
