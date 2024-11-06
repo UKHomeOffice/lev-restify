@@ -14,7 +14,7 @@ module.exports = (req) => {
       groups = groups.concat(parsed);
     }
   } catch (e) {
-    // Don't case if this fails.
+    // Don't care if this fails.
   }
 
   return ({
