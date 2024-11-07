@@ -144,6 +144,93 @@ describe('lib/req-info.js', () => {
             username: 'original-username'
           }));
         });
+        describe('testing the presence of internal groups in the header', () => {
+          let result;
+
+          before(() => {
+            result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-groups': 'group1,group2,group3',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-original-username': 'original-username',
+                'x-auth-username': 'username'
+              }
+            });
+          });
+
+          it('appends any groups in the internal groups header', () => {
+            result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-groups': 'group1,group2,group3',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-original-username': 'original-username',
+                'x-auth-username': 'username',
+                'x-groups-internal': '["group4","group5","group6"]'
+              }
+            });
+            result.should.deep.equal({
+              client: 'client',
+              groups: ['group1', 'group2', 'group3', 'group4', 'group5', 'group6'],
+              roles: ['role1', 'role2', 'role3'],
+              username: 'original-username'
+            })
+          });
+          it('ignores any invalid structures in the header', () => {
+            result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-groups': 'group1,group2,group3',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-original-username': 'original-username',
+                'x-auth-username': 'username',
+                'x-groups-internal': 'invalid json'
+              }
+            });
+            result.should.deep.equal({
+              client: 'client',
+              groups: ['group1', 'group2', 'group3'],
+              roles: ['role1', 'role2', 'role3'],
+              username: 'original-username'
+            })
+          });
+          it('ignores any valid json structures that do not resolve to an array', () => {
+            result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-groups': 'group1,group2,group3',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-original-username': 'original-username',
+                'x-auth-username': 'username',
+                'x-groups-internal': '{"group4": "extra", "group5": "extra", "group6": "extra"}'
+              }
+            });
+            result.should.deep.equal({
+              client: 'client',
+              groups: ['group1', 'group2', 'group3'],
+              roles: ['role1', 'role2', 'role3'],
+              username: 'original-username'
+            })
+          });
+          it('copes with groups only coming from the internal header', () => {
+            result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-roles': 'role1,role2,role3',
+                'x-original-username': 'original-username',
+                'x-auth-username': 'username',
+                'x-groups-internal': '["group4","group5","group6"]'
+              }
+            });
+            result.should.deep.equal({
+              client: 'client',
+              groups: ['group4', 'group5', 'group6'],
+              roles: ['role1', 'role2', 'role3'],
+              username: 'original-username'
+            })
+          });
+        });
       });
     });
   });
