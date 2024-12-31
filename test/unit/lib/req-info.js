@@ -85,6 +85,50 @@ describe('lib/req-info.js', () => {
             username: 'username'
           }));
         });
+        describe('with multiple audiences and x-original-client header set in lev-adapter', () => {
+          it('uses the original client set in lev-adapter when set', () => {
+            const result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-groups': 'group1',
+                'x-auth-roles': 'role1',
+                'x-auth-username': 'username',
+                'x-original-client': 'original-client'
+              }
+            });
+            result.should.deep.equal({
+              client: 'original-client',
+              groups: [
+                'group1',
+              ],
+              roles: [
+                'role1',
+              ],
+              username: 'username'
+            });
+          });
+          it('ignores the original client when it is a blank string', () => {
+            const result = reqInfo({
+              headers: {
+                'x-auth-audience': 'client,lev-api',
+                'x-auth-groups': 'group1',
+                'x-auth-roles': 'role1',
+                'x-auth-username': 'username',
+                'x-original-client': ''
+              }
+            });
+            result.should.deep.equal({
+              client: 'client',
+              groups: [
+                'group1',
+              ],
+              roles: [
+                'role1',
+              ],
+              username: 'username'
+            });
+          });
+        });
         describe('x-original-username header set in lev-adapter', () => {
           let result;
 
@@ -146,18 +190,6 @@ describe('lib/req-info.js', () => {
         });
         describe('testing the presence of internal groups in the header', () => {
           let result;
-
-          before(() => {
-            result = reqInfo({
-              headers: {
-                'x-auth-audience': 'client,lev-api',
-                'x-auth-groups': 'group1,group2,group3',
-                'x-auth-roles': 'role1,role2,role3',
-                'x-original-username': 'original-username',
-                'x-auth-username': 'username'
-              }
-            });
-          });
 
           it('appends any groups in the internal groups header', () => {
             result = reqInfo({

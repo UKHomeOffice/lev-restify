@@ -1,8 +1,12 @@
 'use strict';
 
 module.exports = (req) => {
-  const aud = req.headers['x-auth-aud'] || req.headers['x-auth-audience'];
-  const client = aud && aud.split(',').filter(e => e !== 'lev-api')[0];
+  // x-original-client header set by lev-adapter. If it's set, this is what we want to reflect further downstream.
+  let client = req.headers['x-original-client'];
+  if (!client) {
+    const aud = req.headers['x-auth-aud'] || req.headers['x-auth-audience'];
+    client = aud && aud.split(',').filter(e => e !== 'lev-api')[0];
+  }
 
   // x-original-username header set by lev-adapter. Once this is 'wired' the gatekeeper generated x-auth-username will be removed
   const user = req.headers['x-original-username'] || req.headers['x-auth-username'];
