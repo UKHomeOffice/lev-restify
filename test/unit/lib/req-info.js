@@ -26,13 +26,13 @@ describe('lib/req-info.js', () => {
       });
 
       describe('with keycloak-gatekeeper/lev-adapter headers', () => {
-        describe('with a single audience using (short header) x-auth-aud', () => {
+        describe('with a single client using (short header) x-original-client', () => {
           let result;
 
           before(() => {
             result = reqInfo({
               headers: {
-                'x-auth-aud': 'client',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-auth-username': 'username'
@@ -62,7 +62,7 @@ describe('lib/req-info.js', () => {
           before(() => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-auth-username': 'username'
@@ -91,7 +91,7 @@ describe('lib/req-info.js', () => {
           before(() => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username'
@@ -120,7 +120,7 @@ describe('lib/req-info.js', () => {
           before(() => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
@@ -150,7 +150,7 @@ describe('lib/req-info.js', () => {
           before(() => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
@@ -162,7 +162,7 @@ describe('lib/req-info.js', () => {
           it('appends any groups in the internal groups header', () => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
@@ -180,7 +180,7 @@ describe('lib/req-info.js', () => {
           it('ignores any invalid structures in the header', () => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
@@ -198,7 +198,7 @@ describe('lib/req-info.js', () => {
           it('ignores any valid json structures that do not resolve to an array', () => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
@@ -216,7 +216,7 @@ describe('lib/req-info.js', () => {
           it('copes with groups only coming from the internal header', () => {
             result = reqInfo({
               headers: {
-                'x-auth-audience': 'client,lev-api',
+                'x-original-client': 'client',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
                 'x-auth-username': 'username',
