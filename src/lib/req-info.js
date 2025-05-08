@@ -18,6 +18,7 @@ module.exports = (req) => {
     username: user,
     client: req.headers['x-original-client'],
     groups: groups,
-    roles: req.headers['x-auth-roles'] && String(req.headers['x-auth-roles']).split(',') || []
+    roles: req.headers['x-auth-roles'] && String(req.headers['x-auth-roles']).split(',') || [],
+    organisationId: req.headers['x-organisation-id']
   });
 };

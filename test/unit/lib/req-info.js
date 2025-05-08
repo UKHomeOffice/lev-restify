@@ -21,7 +21,8 @@ describe('lib/req-info.js', () => {
           client: undefined,
           groups: [],
           roles: [],
-          username: undefined
+          username: undefined,
+          organisationId: undefined
         }));
       });
 
@@ -35,7 +36,8 @@ describe('lib/req-info.js', () => {
                 'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
-                'x-auth-username': 'username'
+                'x-auth-username': 'username',
+                'x-organisation-id': 'organisationId'
               }
             });
           });
@@ -52,7 +54,8 @@ describe('lib/req-info.js', () => {
               'role2',
               'role3'
             ],
-            username: 'username'
+            username: 'username',
+            organisationId: 'organisationId'
           }));
         });
 
@@ -65,7 +68,8 @@ describe('lib/req-info.js', () => {
                 'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
-                'x-auth-username': 'username'
+                'x-auth-username': 'username',
+                'x-organisation-id': 'organisationId'
               }
             });
           });
@@ -82,7 +86,8 @@ describe('lib/req-info.js', () => {
               'role2',
               'role3'
             ],
-            username: 'username'
+            username: 'username',
+            organisationId: 'organisationId'
           }));
         });
         describe('x-original-username header set in lev-adapter', () => {
@@ -94,7 +99,8 @@ describe('lib/req-info.js', () => {
                 'x-original-client': 'client',
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
-                'x-original-username': 'original-username'
+                'x-original-username': 'original-username',
+                'x-organisation-id': 'organisationId'
               }
             });
           });
@@ -111,7 +117,8 @@ describe('lib/req-info.js', () => {
               'role2',
               'role3'
             ],
-            username: 'original-username'
+            username: 'original-username',
+            organisationId: 'organisationId'
           }));
         });
         describe('both x-original-username header set in lev-adapter and x-auth-username from gatekeeper', () => {
@@ -124,7 +131,8 @@ describe('lib/req-info.js', () => {
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
-                'x-auth-username': 'username'
+                'x-auth-username': 'username',
+                'x-organisation-id': 'organisationId'
               }
             });
           });
@@ -141,7 +149,8 @@ describe('lib/req-info.js', () => {
               'role2',
               'role3'
             ],
-            username: 'original-username'
+            username: 'original-username',
+            organisationId: 'organisationId'
           }));
         });
         describe('testing the presence of internal groups in the header', () => {
@@ -154,7 +163,8 @@ describe('lib/req-info.js', () => {
                 'x-auth-groups': 'group1,group2,group3',
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
-                'x-auth-username': 'username'
+                'x-auth-username': 'username',
+                'x-organisation-id': 'organisationId'
               }
             });
           });
@@ -167,14 +177,16 @@ describe('lib/req-info.js', () => {
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
                 'x-auth-username': 'username',
-                'x-groups-internal': '["group4","group5","group6"]'
+                'x-groups-internal': '["group4","group5","group6"]',
+                'x-organisation-id': 'organisationId'
               }
             });
             result.should.deep.equal({
               client: 'client',
               groups: ['group1', 'group2', 'group3', 'group4', 'group5', 'group6'],
               roles: ['role1', 'role2', 'role3'],
-              username: 'original-username'
+              username: 'original-username',
+              organisationId: 'organisationId'
             })
           });
           it('ignores any invalid structures in the header', () => {
@@ -185,14 +197,16 @@ describe('lib/req-info.js', () => {
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
                 'x-auth-username': 'username',
-                'x-groups-internal': 'invalid json'
+                'x-groups-internal': 'invalid json',
+                'x-organisation-id': 'organisationId'
               }
             });
             result.should.deep.equal({
               client: 'client',
               groups: ['group1', 'group2', 'group3'],
               roles: ['role1', 'role2', 'role3'],
-              username: 'original-username'
+              username: 'original-username',
+              organisationId: 'organisationId'
             })
           });
           it('ignores any valid json structures that do not resolve to an array', () => {
@@ -203,14 +217,16 @@ describe('lib/req-info.js', () => {
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
                 'x-auth-username': 'username',
-                'x-groups-internal': '{"group4": "extra", "group5": "extra", "group6": "extra"}'
+                'x-groups-internal': '{"group4": "extra", "group5": "extra", "group6": "extra"}',
+                'x-organisation-id': 'organisationId'
               }
             });
             result.should.deep.equal({
               client: 'client',
               groups: ['group1', 'group2', 'group3'],
               roles: ['role1', 'role2', 'role3'],
-              username: 'original-username'
+              username: 'original-username',
+              organisationId: 'organisationId'
             })
           });
           it('copes with groups only coming from the internal header', () => {
@@ -220,14 +236,16 @@ describe('lib/req-info.js', () => {
                 'x-auth-roles': 'role1,role2,role3',
                 'x-original-username': 'original-username',
                 'x-auth-username': 'username',
-                'x-groups-internal': '["group4","group5","group6"]'
+                'x-groups-internal': '["group4","group5","group6"]',
+                'x-organisation-id': 'organisationId'
               }
             });
             result.should.deep.equal({
               client: 'client',
               groups: ['group4', 'group5', 'group6'],
               roles: ['role1', 'role2', 'role3'],
-              username: 'original-username'
+              username: 'original-username',
+              organisationId: 'organisationId'
             })
           });
         });
