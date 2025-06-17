@@ -250,6 +250,31 @@ describe('lib/req-info.js', () => {
           });
         });
       });
+      describe('req info set using env variables', () => {
+        const originalEnv = process.env;
+
+        beforeEach(() => {
+          process.env = { ...originalEnv, ROLES: 'envRole1,envRole2', GROUPS: 'testgroup1,testgroup2', ORIGINAL_CLIENT: 'testclient', ORIGINAL_USERNAME: 'testuser', ORGANISATION_ID: 'bf3adbd2-0107-4370-b926-741e2a8c2b7b' };
+        });
+
+        afterEach(() => {
+          process.env = originalEnv;
+        });
+
+        it('uses env variables when headers are missing', () => {
+          const result = reqInfo({
+            headers: {}
+          });
+
+          expect(result).to.deep.equal({
+            client: 'testclient',
+            groups: ['testgroup1', 'testgroup2'],
+            roles: ['envRole1', 'envRole2'],
+            username: 'testuser',
+            organisationId: 'bf3adbd2-0107-4370-b926-741e2a8c2b7b'
+          });
+        });
+      })
     });
   });
 });
