@@ -1,5 +1,8 @@
 'use strict';
 
+// patch to remove use of spdy, which is not used but causing errors with node 20+
+require('./patches/no-spdy');
+
 const errors = require('restify-errors');
 const healthCheck = require('./middleware/health-check');
 const logger = require('./lib/logger');
