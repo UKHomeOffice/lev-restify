@@ -58,7 +58,8 @@ const createServer = options => {
     headers: [
       'x-auth-aud',
       'x-auth-username',
-      'x-auth-groups'
+      'x-auth-groups',
+      'x-correlation-id'
     ]
   }));
   httpd.use(restify.plugins.acceptParser(httpd.acceptable));
